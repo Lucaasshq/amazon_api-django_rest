@@ -2,6 +2,27 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class Usuario(AbstractUser):
+    class Tipo(models.TextChoices):
+        CLIENTE = 'CLIENTE', 'Cliente'
+        VENDEDOR = 'VENDEDOR', 'Vendedor'
+    tipo = models.CharField(
+        max_length=10,
+        choices=Tipo.choices,
+        default=Tipo.CLIENTE,
+    )
+
+    cpf = models.CharField(max_length=11, unique=True)
+    telefone = models.CharField(max_length=15, blank=True)
+    def is_cliente(self):
+        return self.tipo == self.Tipo.CLIENTE
+    def is_vendedor(self):
+        return self.tipo == self.Tipo.VENDEDOR
+    def __str__(self):
+        return f'{self.username} ({self.get_tipo_display()})'
+
 
 class Cliente(models.Model):
     nome = models.CharField(max_length=100)

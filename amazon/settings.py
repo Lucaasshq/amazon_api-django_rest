@@ -41,9 +41,21 @@ INSTALLED_APPS = [
     'django_filters',
     'backend',
     'drf_yasg',
-    'rest_framework.authtoken',
-   
+    'rest_framework.authtoken'
 ]
+
+AUTH_USER_MODEL = 'backend.Usuario'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
